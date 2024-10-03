@@ -8,13 +8,16 @@ const app = express();
 // Middleware untuk parsing JSON
 app.use(express.json());
 
+// Middleware CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Mengizinkan semua origin
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE'); // Mengizinkan method tertentu
+  res.header('Access-Control-Allow-Headers', 'Content-Type'); // Mengizinkan header tertentu
+  next();
+});
+
 // Routes API untuk produk
 app.use("/api/products", productRouter);
-
-// Jika tidak ada route yang cocok, arahkan ke halaman utama (index.html)
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'Frontend', 'index.html'));
-// });
 
 const port = process.env.PORT || 3000;
 // Jalankan server di port 3000
